@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Future Travel Mission ✈️ – Far and Away</title>
+<meta name="description" content="An interactive English grammar trip across Saudi Arabia – Mega Goal 2, Unit 3: Far and Away." />
+<meta name="theme-color" content="#2BB3B1" />
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✈️</text></svg>" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --pink: #F28DB2;
+    --pink-deep: #D9577F;
+    --pink-soft: #FBD9E5;
+    --teal: #2BB3B1;
+    --teal-deep: #137C80;
+    --teal-soft: #CDEFEE;
+    --beige: #F7EBDA;
+    --sand: #E8CFA8;
+    --sand-deep: #C9A06A;
+    --ink: #3A2C36;
+    --paper: #FFFAF3;
+    --good: #1E9E8F;
+    --bad: #D94F6B;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body {
+    font-family: "Fredoka", system-ui, sans-serif;
+    color: var(--ink);
+    background:
+      radial-gradient(circle at 15% 20%, rgba(242,141,178,.35), transparent 40%),
+      radial-gradient(circle at 85% 80%, rgba(43,179,177,.35), transparent 45%),
+      var(--beige);
+    display: flex; align-items: center; justify-content: center;
+    min-height: 100dvh; overflow: hidden;
+    -webkit-tap-highlight-color: transparent;
+  }
+  button { font-family: inherit; color: inherit; cursor: pointer; touch-action: manipulation; -webkit-user-select: none; user-select: none; }
+
+  /* ---------- 16:9 stage ---------- */
+  .stage {
+    position: relative;
+    width: min(100vw, calc(100dvh * 16 / 9));
+    height: min(100dvh, calc(100vw * 9 / 16));
+    container-type: size;
+    background:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cg fill='none' stroke='%23C9A06A' stroke-opacity='.18' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M10 20 q10 -8 20 0 t20 0'/%3E%3Cpath d='M70 80 q10 -8 20 0 t20 0'/%3E%3Ccircle cx='95' cy='25' r='3'/%3E%3Ccircle cx='25' cy='95' r='2'/%3E%3C/g%3E%3C/svg%3E"),
+      var(--paper);
+    border-radius: clamp(0px, 2cqw, 28px);
+    box-shadow: 0 1.2cqw 4cqw rgba(58,44,54,.18);
+    overflow: hidden;
+  }
+  .screen { position: absolute; inset: 0; display: none; }
+  .screen.active { display: flex; animation: fadeIn .45s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: scale(.985); } to { opacity: 1; transform: none; } }
+
+  .hand { font-family: "Caveat", cursive; }
+  .btn {
+    border: none; border-radius: 999px;
+    font-weight: 600; font-size: clamp(16px, 2.3cqw, 30px);
+    padding: .65em 1.6em;
+    background: var(--pink-deep); color: #fff;
+    box-shadow: 0 .35em 0 #A93B5E;
+    transition: transform .12s, box-shadow .12s, filter .2s;
+    display: inline-flex; align-items: center; gap: .45em;
+  }
+  .btn:hover { filter: brightness(1.06); }
+  .btn:active { transform: translateY(.25em); box-shadow: 0 .1em 0 #A93B5E; }
+  .btn.teal { background: var(--teal); box-shadow: 0 .35em 0 var(--teal-deep); }
+  .btn.teal:active { box-shadow: 0 .1em 0 var(--teal-deep); }
+  .btn.ghost { background: #fff; color: var(--ink); box-shadow: 0 .35em 0 var(--sand); border: 2px solid var(--sand); }
+  .btn:focus-visible, .opt:focus-visible, .tile:focus-visible { outline: 4px solid var(--teal); outline-offset: 3px; }
+
+  /* ---------- Start screen ---------- */
+  #start { align-items: center; justify-content: center; padding: 3cqh 5cqw; gap: 4cqw; }
+  .start-text { flex: 1 1 52%; display: flex; flex-direction: column; gap: 2.2cqh; align-items: flex-start; }
+  .badge {
+    background: var(--teal-soft); color: var(--teal-deep);
+    font-weight: 600; font-size: clamp(12px, 1.5cqw, 20px);
+    padding: .35em 1em; border-radius: 999px; border: 2px dashed var(--teal);
+  }
+  .title { font-size: clamp(28px, 5.6cqw, 84px); line-height: 1; font-weight: 700; color: var(--ink); }
+  .title .accent { color: var(--pink-deep); }
+  .subtitle { font-size: clamp(26px, 4.4cqw, 66px); color: var(--teal-deep); line-height: .9; margin-top: -.5cqh; }
+  .lead { font-size: clamp(14px, 1.9cqw, 26px); line-height: 1.4; max-width: 34em; }
+  .teacher {
+    font-size: clamp(14px, 1.8cqw, 24px); font-weight: 500;
+    background: #fff; border: 2px solid var(--pink); border-radius: 1em;
+    padding: .4em 1em; display: inline-flex; align-items: center; gap: .5em;
+  }
+  .teacher b { color: var(--pink-deep); }
+  .start-art { flex: 1 1 48%; height: 88cqh; position: relative; }
+  .start-art svg { width: 100%; height: 100%; }
+
+  /* ---------- Game screen ---------- */
+  #game { flex-direction: column; padding: 2.4cqh 2.6cqw; gap: 2cqh; }
+  .topbar { display: flex; align-items: center; gap: 2cqw; }
+  .route { flex: 1; position: relative; height: 9cqh; }
+  .route-line {
+    position: absolute; left: 6%; right: 6%; top: 38%;
+    border-top: .4cqh dashed var(--sand-deep);
+  }
+  .stop {
+    position: absolute; top: 38%; transform: translate(-50%, -50%);
+    display: flex; flex-direction: column; align-items: center;
+  }
+  .stop .dot {
+    width: 2.6cqh; height: 2.6cqh; border-radius: 50%;
+    background: #fff; border: .45cqh solid var(--sand-deep);
+    transition: all .3s;
+  }
+  .stop .lbl { position: absolute; top: 2.4cqh; font-size: clamp(11px, 1.4cqw, 19px); font-weight: 600; white-space: nowrap; color: #8a7466; }
+  .stop.current .dot { background: var(--pink); border-color: var(--pink-deep); transform: scale(1.25); }
+  .stop.current .lbl { color: var(--pink-deep); }
+  .stop.done .dot { background: var(--teal); border-color: var(--teal-deep); }
+  .stop.done .lbl { color: var(--teal-deep); }
+  .plane {
+    position: absolute; top: 38%; left: 6%;
+    transform: translate(-50%, -125%);
+    font-size: clamp(18px, 3cqw, 40px);
+    transition: left 1.4s cubic-bezier(.6,.05,.3,1);
+    filter: drop-shadow(0 .3cqh 0 rgba(0,0,0,.12));
+  }
+  .score-pill, .sound-btn {
+    background: #fff; border: 2px solid var(--sand); border-radius: 999px;
+    font-weight: 600; font-size: clamp(14px, 2cqw, 26px);
+    padding: .3em .9em; white-space: nowrap;
+  }
+  .score-pill b { color: var(--pink-deep); }
+  .sound-btn { padding: .3em .55em; }
+
+  .progress-wrap { display: flex; align-items: center; gap: 1.2cqw; font-size: clamp(12px, 1.5cqw, 20px); font-weight: 600; color: #8a7466; }
+  .progress { flex: 1; height: 2cqh; min-height: 8px; background: var(--beige); border-radius: 999px; overflow: hidden; border: 2px solid var(--sand); }
+  .progress > i { display: block; height: 100%; width: 0; background: repeating-linear-gradient(45deg, var(--teal) 0 12px, #3cc7c4 12px 24px); border-radius: 999px; transition: width .6s ease; }
+
+  .main { flex: 1; min-height: 0; display: grid; grid-template-columns: 36fr 64fr; gap: 2cqw; }
+  .postcard {
+    background: #fff; border-radius: 2cqw; padding: 1.6cqw;
+    border: 2px solid var(--sand); box-shadow: .5cqw .7cqw 0 var(--pink-soft);
+    display: flex; flex-direction: column; gap: 1cqh; min-height: 0;
+    transform: rotate(-1.2deg);
+  }
+  .postcard .art { flex: 1; min-height: 0; border-radius: 1.4cqw; overflow: hidden; background: var(--teal-soft); }
+  .postcard .art svg { width: 100%; height: 100%; display: block; }
+  .postcard h2 { font-size: clamp(18px, 3cqw, 42px); line-height: 1; }
+  .postcard .chal { font-size: clamp(13px, 1.7cqw, 23px); color: var(--teal-deep); font-weight: 600; }
+  .qcount { font-family: "Caveat", cursive; font-size: clamp(16px, 2.3cqw, 32px); color: var(--pink-deep); }
+
+  .card {
+    background: #fff; border-radius: 2cqw; border: 2px solid var(--sand);
+    box-shadow: .5cqw .7cqw 0 var(--teal-soft);
+    padding: 2.4cqh 2.4cqw; display: flex; flex-direction: column; gap: 2cqh; min-height: 0; overflow-y: auto;
+  }
+  .q-type {
+    align-self: flex-start; font-size: clamp(12px, 1.5cqw, 20px); font-weight: 600;
+    background: var(--pink-soft); color: var(--pink-deep); padding: .25em .9em; border-radius: 999px;
+  }
+  .q-prompt { font-size: clamp(14px, 1.9cqw, 26px); color: #6f5b66; font-weight: 500; }
+  .q-text { font-size: clamp(19px, 3.1cqw, 44px); font-weight: 600; line-height: 1.3; }
+  .blank {
+    display: inline-block; min-width: 4.5em; border-bottom: .12em dashed var(--pink-deep);
+    color: var(--teal-deep); text-align: center; padding: 0 .2em;
+  }
+  .blank.filled { border-bottom-style: solid; border-color: var(--teal); animation: pop .4s ease; }
+  .opts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.4cqw; margin-top: auto; }
+  .opt {
+    min-height: 11cqh; padding: .5em .6em;
+    font-size: clamp(16px, 2.4cqw, 34px); font-weight: 600;
+    background: var(--beige); border: .3cqw solid var(--sand); border-radius: 1.4cqw;
+    box-shadow: 0 .5cqh 0 var(--sand);
+    transition: transform .12s, background .2s, border-color .2s;
+  }
+  .opt:hover:not(:disabled) { background: var(--pink-soft); border-color: var(--pink); }
+  .opt:active:not(:disabled) { transform: translateY(.4cqh); box-shadow: 0 .1cqh 0 var(--sand); }
+  .opt.correct { background: var(--teal); border-color: var(--teal-deep); color: #fff; box-shadow: 0 .5cqh 0 var(--teal-deep); animation: pop .4s ease; }
+  .opt.wrong { background: #FBE1E6; border-color: var(--bad); color: var(--bad); text-decoration: line-through; animation: shake .45s ease; opacity: .75; }
+  .opt:disabled { cursor: default; }
+  @keyframes pop { 50% { transform: scale(1.07); } }
+  @keyframes shake { 20%, 60% { transform: translateX(-6px); } 40%, 80% { transform: translateX(6px); } }
+
+  /* word order */
+  .answer-row, .bank {
+    display: flex; flex-wrap: wrap; gap: 1cqw; align-items: center;
+    min-height: 11cqh; padding: 1cqh 1cqw; border-radius: 1.4cqw;
+  }
+  .answer-row { background: var(--teal-soft); border: .25cqw dashed var(--teal); }
+  .answer-row.empty::before { content: "Tap the words below…"; color: var(--teal-deep); opacity: .7; font-size: clamp(14px, 1.9cqw, 26px); padding-left: .4em; }
+  .answer-row.wrong { animation: shake .45s ease; border-color: var(--bad); background: #FBE1E6; }
+  .answer-row.right { border-style: solid; background: #d6f5ef; }
+  .bank { background: var(--beige); }
+  .tile {
+    font-size: clamp(16px, 2.4cqw, 34px); font-weight: 600;
+    background: #fff; border: .25cqw solid var(--pink); border-radius: 1cqw;
+    padding: .3em .7em; box-shadow: 0 .4cqh 0 var(--pink);
+    transition: transform .12s;
+  }
+  .tile:active { transform: translateY(.3cqh); }
+  .tile.used { visibility: hidden; }
+  .punct { font-size: clamp(18px, 2.8cqw, 40px); font-weight: 700; }
+  .order-actions { display: flex; gap: 1.2cqw; }
+  .order-actions .btn { font-size: clamp(14px, 2cqw, 26px); }
+
+  .feedback {
+    display: flex; align-items: center; gap: 1.4cqw; min-height: 10cqh;
+    border-radius: 1.4cqw; padding: 1cqh 1.4cqw; font-size: clamp(14px, 2cqw, 27px);
+    visibility: hidden;
+  }
+  .feedback.show { visibility: visible; animation: fadeIn .3s ease; }
+  .feedback.good { background: #DDF5F1; color: var(--teal-deep); }
+  .feedback.bad { background: #FDE5EA; color: var(--bad); }
+  .feedback .msg { flex: 1; line-height: 1.3; }
+  .feedback .msg b { display: block; font-size: 1.1em; }
+  .feedback .btn { font-size: clamp(14px, 2cqw, 26px); flex-shrink: 0; }
+
+  /* ---------- Overlays ---------- */
+  .overlay {
+    position: absolute; inset: 0; z-index: 10; display: none;
+    align-items: center; justify-content: center;
+    background: rgba(58,44,54,.38); backdrop-filter: blur(3px);
+  }
+  .overlay.active { display: flex; animation: fadeIn .3s ease; }
+  .pass {
+    width: min(78cqw, 1100px); background: #fff; border-radius: 2.4cqw; overflow: hidden;
+    display: grid; grid-template-columns: 1fr 30%; box-shadow: 0 2cqh 6cqh rgba(0,0,0,.25);
+    animation: slideUp .5s cubic-bezier(.2,.9,.3,1.2);
+  }
+  @keyframes slideUp { from { transform: translateY(12cqh); opacity: 0; } to { transform: none; opacity: 1; } }
+  .pass-main { padding: 3.5cqh 3cqw; display: flex; flex-direction: column; gap: 1.8cqh; }
+  .pass-head { display: flex; justify-content: space-between; align-items: center; font-weight: 600; color: var(--teal-deep); font-size: clamp(12px, 1.6cqw, 22px); letter-spacing: .08em; text-transform: uppercase; }
+  .pass-route { display: flex; align-items: center; gap: 2cqw; }
+  .pass-route .city { font-size: clamp(20px, 4cqw, 58px); font-weight: 700; line-height: 1; }
+  .pass-route .city small { display: block; font-size: .32em; color: #8a7466; font-weight: 500; letter-spacing: .1em; }
+  .pass-route .arrow { flex: 1; border-top: .4cqh dashed var(--pink); position: relative; }
+  .pass-route .arrow::after { content: "✈️"; position: absolute; left: 50%; top: 0; transform: translate(-50%, -58%); font-size: clamp(16px, 2.6cqw, 36px); }
+  .pass-info { display: flex; gap: 3cqw; font-size: clamp(13px, 1.8cqw, 24px); }
+  .pass-info span { display: block; font-size: .7em; color: #8a7466; text-transform: uppercase; letter-spacing: .08em; }
+  .pass-stub {
+    background: var(--pink-soft); border-left: .4cqw dashed #fff;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2cqh; padding: 2cqh 1.5cqw; text-align: center;
+  }
+  .pass-stub .big { font-size: clamp(36px, 7cqw, 100px); line-height: 1; }
+  .pass-stub p { font-size: clamp(13px, 1.7cqw, 23px); font-weight: 500; }
+
+  .stamp {
+    width: 22cqh; height: 22cqh; border-radius: 50%;
+    border: .7cqh double var(--pink-deep); color: var(--pink-deep);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    transform: rotate(-12deg); font-weight: 700; text-transform: uppercase; text-align: center; line-height: 1.05;
+    font-size: clamp(11px, 1.6cqw, 22px); animation: stampIn .5s cubic-bezier(.3,1.6,.5,1) both .15s;
+    background: rgba(255,255,255,.6);
+  }
+  .stamp .em { font-size: 2.2em; }
+  @keyframes stampIn { from { transform: rotate(-12deg) scale(2.4); opacity: 0; } to { transform: rotate(-12deg) scale(1); opacity: 1; } }
+
+  /* ---------- End screen ---------- */
+  #end { align-items: center; justify-content: center; padding: 3cqh 5cqw; gap: 4cqw; }
+  .end-left { flex: 1 1 50%; display: flex; flex-direction: column; gap: 2cqh; align-items: flex-start; }
+  .end-right { flex: 1 1 50%; display: flex; flex-direction: column; align-items: center; gap: 2.5cqh; }
+  .final-score {
+    width: 34cqh; height: 34cqh; border-radius: 50%;
+    background: conic-gradient(var(--teal) calc(var(--p) * 1%), var(--teal-soft) 0);
+    display: flex; align-items: center; justify-content: center; position: relative;
+  }
+  .final-score::before { content: ""; position: absolute; inset: 3cqh; background: #fff; border-radius: 50%; }
+  .final-score div { position: relative; text-align: center; font-weight: 700; font-size: clamp(30px, 6cqw, 86px); line-height: 1; }
+  .final-score small { display: block; font-size: .3em; color: #8a7466; font-weight: 500; }
+  .stars { font-size: clamp(26px, 4.5cqw, 64px); letter-spacing: .1em; }
+  .stars .off { filter: grayscale(1); opacity: .3; }
+  .stamps-row { display: flex; gap: 1.4cqw; flex-wrap: wrap; }
+  .mini-stamp {
+    border: .4cqh solid var(--teal); color: var(--teal-deep); border-radius: 1cqw;
+    padding: .3em .7em; font-weight: 600; font-size: clamp(12px, 1.6cqw, 22px); background: #fff;
+    transform: rotate(var(--r, -3deg));
+  }
+  .end-msg { font-size: clamp(18px, 3cqw, 44px); font-weight: 700; line-height: 1.15; }
+  .end-sub { font-size: clamp(14px, 1.9cqw, 26px); line-height: 1.4; }
+
+  #confetti { position: absolute; inset: 0; pointer-events: none; z-index: 20; }
+
+  /* ---------- Portrait phones: keep it usable ---------- */
+  .rotate-tip { display: none; }
+  @media (orientation: portrait) {
+    body { overflow: auto; align-items: stretch; }
+    .stage { width: 100vw; height: auto; min-height: 100dvh; border-radius: 0; container-type: inline-size; }
+    .screen.active { position: relative; min-height: 100dvh; }
+    #start, #end { flex-direction: column; padding: 6cqw 6cqw 10cqw; gap: 5cqw; }
+    .start-art { width: 100%; height: 60cqw; flex: none; order: -1; }
+    .main { grid-template-columns: 1fr; }
+    .postcard { transform: none; flex-direction: row; align-items: center; }
+    .postcard .art { flex: 0 0 34%; height: 24cqw; }
+    .opts { grid-template-columns: 1fr; gap: 3cqw; }
+    .opt { min-height: 14cqw; }
+    .final-score { width: 50cqw; height: 50cqw; }
+    .final-score::before { inset: 5cqw; }
+    .route { height: 14cqw; }
+    .stamp { width: 30cqw; height: 30cqw; }
+    .pass { grid-template-columns: 1fr; width: 92cqw; }
+    .pass-stub { border-left: none; border-top: 1cqw dashed #fff; }
+    .rotate-tip {
+      display: block; text-align: center; font-size: 14px; padding: 6px; background: var(--teal-soft); color: var(--teal-deep); font-weight: 500;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+</style>
+</head>
+<body>
+<main class="stage" id="stage">
+  <div class="rotate-tip">📱 Tip: turn your phone sideways for the best view!</div>
+
+  <!-- Hand-drawn filter shared by all illustrations -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <filter id="rough"><feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="3" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2.6"/></filter>
+  </svg>
+
+  <!-- ============ START ============ -->
+  <section class="screen active" id="start" aria-label="Start screen">
+    <div class="start-text">
+      <span class="badge">Mega Goal 2 · Unit 3 · Far and Away</span>
+      <h1 class="title">Future Travel <span class="accent">Mission</span> ✈️</h1>
+      <div class="subtitle hand">Far and Away</div>
+      <p class="lead">Pack your bags! Fly across Saudi Arabia, stop at <b>4 amazing stations</b>, and complete a grammar challenge at each one to earn your passport stamps.</p>
+      <div class="teacher">👩‍🏫 Teacher: <b>Ghaliah Al-Shamrani</b></div>
+      <button class="btn" id="startBtn">Start Mission 🚀</button>
+    </div>
+    <div class="start-art" aria-hidden="true">
+      <svg viewBox="0 0 400 320">
+        <g filter="url(#rough)" stroke="#3A2C36" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+          <!-- map blob -->
+          <path d="M70 70 C120 30 220 40 280 55 C340 70 370 120 350 180 C335 230 300 270 230 280 C160 292 90 270 60 220 C35 175 35 105 70 70Z" fill="#F7EBDA"/>
+          <path d="M90 95 C140 70 230 75 285 90" fill="none" stroke="#E8CFA8" stroke-width="2"/>
+          <!-- route -->
+          <path d="M105 205 C140 140 175 120 190 105 C215 135 220 190 175 230 C220 230 260 170 290 150" fill="none" stroke="#D9577F" stroke-width="3" stroke-dasharray="8 9"/>
+          <!-- pins -->
+          <g fill="#F28DB2"><circle cx="105" cy="205" r="9"/><circle cx="190" cy="105" r="9"/><circle cx="175" cy="230" r="9"/><circle cx="290" cy="150" r="9"/></g>
+          <!-- plane -->
+          <g transform="translate(300 70) rotate(-20)" fill="#2BB3B1">
+            <path d="M-30 0 L28 -4 Q40 0 28 4 Z"/>
+            <path d="M0 -2 L-14 -26 L-6 -26 L14 -2Z"/>
+            <path d="M0 2 L-14 26 L-6 26 L14 2Z"/>
+            <path d="M-26 -1 L-34 -12 L-29 -12 L-20 -1Z"/>
+          </g>
+          <!-- sun -->
+          <circle cx="60" cy="60" r="22" fill="#F9C784"/>
+          <g stroke="#F9C784"><path d="M60 26 v-10"/><path d="M60 94 v10"/><path d="M26 60 h-10"/><path d="M94 60 h10"/></g>
+          <!-- palm -->
+          <path d="M330 270 q-6 -40 4 -70" fill="none" stroke="#C9A06A" stroke-width="6"/>
+          <g fill="#2BB3B1"><path d="M334 200 q-30 -10 -45 8 q25 -4 45 -8z"/><path d="M334 200 q28 -14 46 2 q-24 -2 -46 -2z"/><path d="M334 200 q-8 -28 -30 -32 q20 14 30 32z"/><path d="M334 200 q14 -26 36 -26 q-22 10 -36 26z"/></g>
+          <!-- suitcase -->
+          <g transform="translate(40 240)"><rect x="0" y="10" width="62" height="46" rx="8" fill="#F28DB2"/><path d="M20 10 v-10 h22 v10" fill="none"/><path d="M0 30 h62" stroke="#fff"/><circle cx="14" cy="60" r="4" fill="#3A2C36"/><circle cx="48" cy="60" r="4" fill="#3A2C36"/></g>
+        </g>
+        <g font-family="Caveat, cursive" font-size="22" fill="#137C80" font-weight="700">
+          <text x="62" y="232">Jeddah</text><text x="150" y="90">AlUla</text><text x="140" y="262">Abha</text><text x="270" y="182">Riyadh</text>
+        </g>
+      </svg>
+    </div>
+  </section>
+
+  <!-- ============ GAME ============ -->
+  <section class="screen" id="game" aria-label="Mission">
+    <div class="topbar">
+      <div class="route" id="route" aria-hidden="true">
+        <div class="route-line"></div>
+        <div class="plane" id="plane">✈️</div>
+      </div>
+      <div class="score-pill" aria-live="polite">⭐ <b id="score">0</b> / 12</div>
+      <button class="sound-btn" id="soundBtn" aria-label="Toggle sound">🔊</button>
+    </div>
+    <div class="progress-wrap">
+      <span>Progress</span>
+      <div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="12" aria-valuenow="0" id="progressBar"><i id="progressFill"></i></div>
+      <span id="progressText">0 / 12</span>
+    </div>
+    <div class="main">
+      <aside class="postcard">
+        <div class="art" id="stationArt"></div>
+        <div>
+          <div class="qcount" id="qcount">Question 1 of 3</div>
+          <h2 id="stationName">Jeddah</h2>
+          <div class="chal" id="stationChal">Future Plans</div>
+        </div>
+      </aside>
+      <section class="card" id="card" aria-live="polite"></section>
+    </div>
+  </section>
+
+  <!-- ============ END ============ -->
+  <section class="screen" id="end" aria-label="Results">
+    <div class="end-left">
+      <span class="badge">Mission Complete 🛬</span>
+      <div class="end-msg" id="endMsg">Well done!</div>
+      <p class="end-sub" id="endSub"></p>
+      <div class="stamps-row" id="stampsRow"></div>
+      <div class="teacher">👩‍🏫 Teacher: <b>Ghaliah Al-Shamrani</b></div>
+      <button class="btn teal" id="againBtn">Play Again 🔁</button>
+    </div>
+    <div class="end-right">
+      <div class="final-score" id="finalRing" style="--p:0"><div><span id="finalScore">0</span><small>out of 12</small></div></div>
+      <div class="stars" id="stars"></div>
+    </div>
+  </section>
+
+  <!-- ============ OVERLAYS ============ -->
+  <div class="overlay" id="introOverlay" role="dialog" aria-modal="true" aria-labelledby="introTo">
+    <div class="pass">
+      <div class="pass-main">
+        <div class="pass-head"><span>Boarding Pass</span><span id="introFlight">Flight FTM-01</span></div>
+        <div class="pass-route">
+          <div class="city"><small>FROM</small><span id="introFrom">Home</span></div>
+          <div class="arrow"></div>
+          <div class="city"><small>TO</small><span id="introTo">Jeddah</span></div>
+        </div>
+        <div class="pass-info">
+          <div><span>Challenge</span><b id="introChal">Future Plans</b></div>
+          <div><span>Questions</span><b>3</b></div>
+          <div><span>Station</span><b id="introNum">1 / 4</b></div>
+        </div>
+        <p class="lead" id="introDesc"></p>
+        <div><button class="btn" id="beginBtn">Begin Challenge ✨</button></div>
+      </div>
+      <div class="pass-stub">
+        <div class="big" id="introEmoji">🌊</div>
+        <p id="introFact"></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="overlay" id="doneOverlay" role="dialog" aria-modal="true" aria-labelledby="doneTitle">
+    <div class="pass">
+      <div class="pass-main">
+        <div class="pass-head"><span>Station Complete</span><span id="doneNum">1 / 4</span></div>
+        <div class="city" style="font-size:clamp(22px,4cqw,58px);font-weight:700" id="doneTitle">Jeddah cleared!</div>
+        <p class="lead" id="doneText"></p>
+        <div><button class="btn teal" id="nextStationBtn">Fly to next station ✈️</button></div>
+      </div>
+      <div class="pass-stub">
+        <div class="stamp" id="doneStamp"><span class="em">🌊</span><span>Jeddah</span><span>Visited</span></div>
+      </div>
+    </div>
+  </div>
+
+  <canvas id="confetti"></canvas>
+</main>
+
+<script>
+/* ======================= ILLUSTRATIONS ======================= */
+const S = 'stroke="#3A2C36" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"';
+const ART = {
+  jeddah: `<svg viewBox="0 0 200 150" preserveAspectRatio="xMidYMid slice"><rect width="200" height="150" fill="#CDEFEE"/>
+    <g filter="url(#rough)" ${S}>
+      <circle cx="160" cy="32" r="14" fill="#F9C784"/>
+      <path d="M100 112 C98 80 96 50 100 18 C104 50 102 80 100 112Z" fill="#fff"/>
+      <path d="M100 22 C88 30 84 44 86 56 M100 22 C112 30 116 44 114 56" fill="none" stroke="#fff" stroke-width="3"/>
+      <path d="M0 105 Q25 96 50 105 T100 105 T150 105 T200 105 V150 H0Z" fill="#2BB3B1"/>
+      <path d="M0 122 Q25 113 50 122 T100 122 T150 122 T200 122" fill="none" stroke="#fff"/>
+      <g transform="translate(18 62)"><rect width="34" height="44" fill="#E8CFA8"/><rect x="8" y="8" width="18" height="12" fill="#F28DB2"/><rect x="8" y="26" width="18" height="12" fill="#F28DB2"/><path d="M8 14 h18 M17 8 v12 M8 32 h18 M17 26 v12" stroke-width="1.2"/></g>
+      <path d="M150 106 l10 -16 l10 16z" fill="#F28DB2"/><path d="M160 90 v-8" />
+    </g></svg>`,
+  alula: `<svg viewBox="0 0 200 150" preserveAspectRatio="xMidYMid slice"><rect width="200" height="150" fill="#FBD9E5"/>
+    <g filter="url(#rough)" ${S}>
+      <circle cx="40" cy="32" r="13" fill="#F9C784"/>
+      <path d="M40 120 C38 80 60 50 100 48 C140 46 165 70 168 100 C170 112 166 120 160 120 L150 120 C150 104 146 96 140 96 C134 96 130 104 130 120 Z" fill="#D9925B"/>
+      <path d="M62 120 C60 96 70 82 82 80" fill="none"/>
+      <path d="M95 60 q10 4 20 0 M110 72 q8 3 16 0" fill="none" stroke-width="1.5"/>
+      <path d="M0 120 Q50 108 100 120 T200 118 V150 H0Z" fill="#E8CFA8"/>
+      <path d="M0 136 Q60 126 120 136 T200 134" fill="none" stroke="#C9A06A"/>
+      <g transform="translate(176 94)"><path d="M0 26 q-2 -16 2 -26" fill="none" stroke="#C9A06A" stroke-width="3"/><path d="M2 0 q-12 -4 -18 4 M2 0 q12 -6 18 2 M2 0 q-2 -12 -10 -14 M2 0 q6 -12 14 -12" fill="none" stroke="#2BB3B1" stroke-width="3"/></g>
+    </g></svg>`,
+  abha: `<svg viewBox="0 0 200 150" preserveAspectRatio="xMidYMid slice"><rect width="200" height="150" fill="#CDEFEE"/>
+    <g filter="url(#rough)" ${S}>
+      <path d="M130 36 a14 10 0 1 1 26 4 a10 8 0 1 1 -2 14 h-26 a9 9 0 1 1 2 -18z" fill="#fff"/>
+      <path d="M-5 130 L45 50 L85 100 L120 40 L205 130Z" fill="#7CC9A0"/>
+      <path d="M45 50 L55 66 L38 66Z M120 40 L132 60 L110 60Z" fill="#fff" stroke-width="1.5"/>
+      <path d="M10 40 L190 88" fill="none" stroke-width="1.8"/>
+      <path d="M96 64 v8" /><rect x="86" y="72" width="22" height="16" rx="3" fill="#F28DB2"/><rect x="90" y="75" width="6" height="6" fill="#fff" stroke-width="1"/><rect x="99" y="75" width="6" height="6" fill="#fff" stroke-width="1"/>
+      <path d="M0 130 H200 V150 H0Z" fill="#5BAF85"/>
+      <g transform="translate(28 106)"><rect width="30" height="26" fill="#F7EBDA"/><path d="M0 6 h30 M0 13 h30" stroke="#D9577F" stroke-width="2"/><path d="M0 20 h30" stroke="#2BB3B1" stroke-width="2"/><rect x="11" y="14" width="8" height="12" fill="#2BB3B1"/></g>
+    </g></svg>`,
+  riyadh: `<svg viewBox="0 0 200 150" preserveAspectRatio="xMidYMid slice"><rect width="200" height="150" fill="#FBD9E5"/>
+    <g filter="url(#rough)" ${S}>
+      <circle cx="160" cy="34" r="12" fill="#F9C784"/>
+      <path d="M78 124 C82 90 84 50 90 16 L110 16 C116 50 118 90 122 124Z" fill="#CDEFEE"/>
+      <path d="M92 22 Q100 50 108 22Z" fill="#FBD9E5"/>
+      <path d="M92 40 L108 40" fill="none" stroke-width="2"/>
+      <path d="M86 70 h28 M84 90 h32 M82 108 h36" fill="none" stroke-width="1.2"/>
+      <g transform="translate(140 72)"><rect width="18" height="52" fill="#E8CFA8"/><path d="M0 0 l9 -14 l9 14" fill="#E8CFA8"/><path d="M4 14 h10 M4 28 h10 M4 42 h10" stroke-width="1.2"/></g>
+      <g transform="translate(36 80)"><rect width="26" height="44" fill="#F7EBDA"/><path d="M0 0 v-6 h4 v6 h5 v-6 h4 v6 h5 v-6 h4 v6" fill="none"/><path d="M9 44 v-14 a4 4 0 0 1 8 0 v14" fill="#2BB3B1"/></g>
+      <path d="M0 124 Q50 116 100 124 T200 122 V150 H0Z" fill="#E8CFA8"/>
+    </g></svg>`
+};
+
+/* ======================= CONTENT ======================= */
+const STATIONS = [
+  {
+    key: 'jeddah', name: 'Jeddah', emoji: '🌊', chal: 'Future Plans – Be Going To',
+    desc: 'The Bride of the Red Sea! Talk about future travel plans using <b>be going to</b>.',
+    fact: 'King Fahd’s Fountain is one of the tallest fountains in the world!',
+    questions: [
+      { type: 'mcq', label: 'Choose the correct answer', prompt: 'Complete the sentence.',
+        text: 'Sara ___ visit Al-Balad next weekend.', options: ['is going to', 'are going to', 'going to'], answer: 'is going to',
+        tip: 'She / He / It → <b>is going to</b> + base verb.' },
+      { type: 'mcq', label: 'Choose the correct answer', prompt: 'Complete the travel plan.',
+        text: 'My family and I ___ stay at a hotel near the Corniche.', options: ['am going to', 'is going to', 'are going to'], answer: 'are going to',
+        tip: 'We / You / They → <b>are going to</b> + base verb.' },
+      { type: 'mcq', label: 'Complete the question', prompt: 'Choose the word that starts the question.',
+        text: '___ you going to swim in the Red Sea tomorrow?', options: ['Is', 'Are', 'Do'], answer: 'Are',
+        tip: 'Questions: <b>Are</b> + you + going to + verb?' }
+    ]
+  },
+  {
+    key: 'alula', name: 'AlUla', emoji: '🐘', chal: 'Present Progressive',
+    desc: 'Explore ancient rocks! Is it happening <b>now</b>, or is it a <b>fixed future arrangement</b>?',
+    fact: 'Elephant Rock is a natural sandstone rock that looks just like an elephant!',
+    questions: [
+      { type: 'mcq', label: 'Now or future?', prompt: 'What does this sentence describe?',
+        text: '“Look! The tour guide is showing us Elephant Rock.”', options: ['Happening now', 'Future arrangement', 'A past habit'], answer: 'Happening now',
+        tip: '“Look!” tells us the action is happening <b>right now</b>.' },
+      { type: 'mcq', label: 'Now or future?', prompt: 'What does this sentence describe?',
+        text: '“We are flying to AlUla on Friday. We booked our tickets.”', options: ['A past habit', 'Happening now', 'Future arrangement'], answer: 'Future arrangement',
+        tip: 'Present progressive + a future time (<b>on Friday</b>) = a fixed arrangement.' },
+      { type: 'order', label: 'Put the words in order', prompt: 'Tap the words to make a correct question.',
+        words: ['When', 'are', 'you', 'visiting', 'Hegra'], punct: '?',
+        tip: 'Question order: <b>Wh-word + are + subject + verb-ing</b>?' }
+    ]
+  },
+  {
+    key: 'abha', name: 'Abha', emoji: '⛰️', chal: 'Will vs. Going To',
+    desc: 'Cool mountains and clouds! Choose <b>will</b> for a quick decision, or <b>going to</b> for a plan or a prediction with evidence.',
+    fact: 'Abha is about 2,200 metres above sea level – the air is cool even in summer!',
+    questions: [
+      { type: 'mcq', label: 'Will or Going To?', prompt: 'Your friend says, “I’m so cold on this mountain!” You decide right now:',
+        text: 'Here, I ___ lend you my jacket.', options: ['will', 'am going to', 'going to'], answer: 'will',
+        tip: 'A decision made <b>at the moment of speaking</b> → <b>will</b>.' },
+      { type: 'mcq', label: 'Will or Going To?', prompt: 'You booked cable car tickets last week.',
+        text: 'We ___ ride the cable car on Saturday.', options: ['will', 'are going to', 'going'], answer: 'are going to',
+        tip: 'A plan decided <b>before</b> speaking → <b>be going to</b>.' },
+      { type: 'mcq', label: 'Will or Going To?', prompt: 'You can see big dark clouds over the mountains.',
+        text: 'Look at those clouds! It ___ rain.', options: ['is going to', 'will', 'are going to'], answer: 'is going to',
+        tip: 'A prediction based on <b>evidence you can see</b> → <b>be going to</b>.' }
+    ]
+  },
+  {
+    key: 'riyadh', name: 'Riyadh', emoji: '🏙️', chal: 'Time Expressions',
+    desc: 'The capital city! Choose the best <b>time expression</b> for each future event.',
+    fact: 'Kingdom Centre has a sky bridge 300 metres above the city!',
+    questions: [
+      { type: 'mcq', label: 'Choose the time expression', prompt: 'Today is Sunday. The Riyadh Season show is on Monday.',
+        text: 'We are going to watch the show ___.', options: ['next year', 'tomorrow', 'later'], answer: 'tomorrow',
+        tip: 'The day after today = <b>tomorrow</b>.' },
+      { type: 'mcq', label: 'Choose the time expression', prompt: 'Today is 1st May. Your trip to Diriyah is on 15th May.',
+        text: 'I’m going to visit Diriyah ___.', options: ['in two weeks', 'next year', 'soon'], answer: 'in two weeks',
+        tip: '14 days from today = <b>in two weeks</b>.' },
+      { type: 'mcq', label: 'Choose the time expression', prompt: 'It is October now. The festival is in November.',
+        text: 'The Riyadh festival is going to start ___.', options: ['next week', 'next month', 'tomorrow'], answer: 'next month',
+        tip: 'The month after this one = <b>next month</b>.' }
+    ]
+  }
+];
+
+const PRAISE = ['Brilliant! 🎉', 'Excellent! 🌟', 'Well done! 💖', 'Perfect! ✨', 'Great job! 🥳', 'Fantastic! 🌴'];
+const RETRY = ['Not quite – try again! 💪', 'Almost! Have another go. 🙂', 'Oops! Try a different answer. 🔍'];
+
+/* ======================= STATE ======================= */
+const $ = id => document.getElementById(id);
+const state = { station: 0, q: 0, score: 0, answered: 0, firstTry: true, stationScores: [0, 0, 0, 0], sound: true };
+const STOP_POS = [8, 36, 64, 92];
+
+const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const pick = a => a[Math.floor(Math.random() * a.length)];
+
+/* ---------- sound (Web Audio, no files) ---------- */
+let actx;
+function tone(freqs, dur = .12, type = 'sine') {
+  if (!state.sound) return;
+  try {
+    actx = actx || new (window.AudioContext || window.webkitAudioContext)();
+    freqs.forEach((f, i) => {
+      const o = actx.createOscillator(), g = actx.createGain();
+      o.type = type; o.frequency.value = f;
+      const t = actx.currentTime + i * dur;
+      g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(.18, t + .02); g.gain.exponentialRampToValueAtTime(.0001, t + dur);
+      o.connect(g).connect(actx.destination); o.start(t); o.stop(t + dur + .02);
+    });
+  } catch (e) {}
+}
+const sfx = { good: () => tone([660, 880, 1175], .11), bad: () => tone([220, 180], .14, 'triangle'), stamp: () => tone([523, 659, 784, 1047], .1) };
+
+/* ---------- screens ---------- */
+function show(id) { document.querySelectorAll('.screen').forEach(s => s.classList.toggle('active', s.id === id)); }
+
+function buildRoute() {
+  const route = $('route');
+  route.querySelectorAll('.stop').forEach(n => n.remove());
+  STATIONS.forEach((s, i) => {
+    const d = document.createElement('div');
+    d.className = 'stop'; d.style.left = STOP_POS[i] + '%';
+    d.innerHTML = `<div class="dot"></div><div class="lbl">${s.name}</div>`;
+    route.appendChild(d);
+  });
+}
+function updateRoute() {
+  document.querySelectorAll('.stop').forEach((n, i) => {
+    n.classList.toggle('done', i < state.station || (i === state.station && state.q >= 3));
+    n.classList.toggle('current', i === state.station && state.q < 3);
+  });
+  $('plane').style.left = STOP_POS[state.station] + '%';
+}
+function updateHUD() {
+  $('score').textContent = state.score;
+  $('progressFill').style.width = (state.answered / 12 * 100) + '%';
+  $('progressText').textContent = `${state.answered} / 12`;
+  $('progressBar').setAttribute('aria-valuenow', state.answered);
+}
+
+function startMission() {
+  Object.assign(state, { station: 0, q: 0, score: 0, answered: 0, stationScores: [0, 0, 0, 0] });
+  buildRoute(); updateHUD();
+  show('game');
+  $('plane').style.transition = 'none'; $('plane').style.left = '0%';
+  requestAnimationFrame(() => { $('plane').style.transition = ''; openIntro(); });
+}
+
+function openIntro() {
+  const s = STATIONS[state.station];
+  state.q = 0;
+  updateRoute();
+  $('introFlight').textContent = 'Flight FTM-0' + (state.station + 1);
+  $('introFrom').textContent = state.station === 0 ? 'Home' : STATIONS[state.station - 1].name;
+  $('introTo').textContent = s.name;
+  $('introChal').textContent = s.chal;
+  $('introNum').textContent = `${state.station + 1} / 4`;
+  $('introDesc').innerHTML = s.desc;
+  $('introEmoji').textContent = s.emoji;
+  $('introFact').textContent = s.fact;
+  $('stationArt').innerHTML = ART[s.key];
+  $('stationName').textContent = s.name;
+  $('stationChal').textContent = s.chal;
+  $('card').innerHTML = '';
+  $('introOverlay').classList.add('active');
+  setTimeout(() => $('beginBtn').focus(), 350);
+}
+
+function renderQuestion() {
+  const s = STATIONS[state.station], q = s.questions[state.q];
+  state.firstTry = true;
+  $('qcount').textContent = `Question ${state.q + 1} of 3`;
+  const card = $('card');
+  const textHTML = q.text ? q.text.replace('___', '<span class="blank" id="blank">&nbsp;</span>') : '';
+  card.innerHTML = `
+    <span class="q-type">${q.label}</span>
+    <p class="q-prompt">${q.prompt}</p>
+    ${q.type === 'mcq' ? `<p class="q-text">${textHTML}</p><div class="opts" id="opts"></div>` : `
+      <div class="answer-row empty" id="answerRow"></div>
+      <div class="bank" id="bank"></div>
+      <div class="order-actions"><button class="btn teal" id="checkBtn">Check ✔</button><button class="btn ghost" id="resetBtn">Clear ↺</button></div>`}
+    <div class="feedback" id="feedback"><div class="msg" id="fbMsg"></div></div>`;
+  card.scrollTop = 0;
+  if (q.type === 'mcq') renderMCQ(q); else renderOrder(q);
+}
+
+function renderMCQ(q) {
+  const box = $('opts');
+  shuffle(q.options).forEach(opt => {
+    const b = document.createElement('button');
+    b.className = 'opt'; b.textContent = opt;
+    b.addEventListener('click', () => {
+      if (opt === q.answer) {
+        b.classList.add('correct');
+        box.querySelectorAll('.opt').forEach(x => x.disabled = true);
+        const blank = $('blank'); if (blank) { blank.textContent = opt; blank.classList.add('filled'); }
+        onCorrect(q);
+      } else {
+        b.classList.add('wrong'); b.disabled = true;
+        onWrong();
+      }
+    });
+    box.appendChild(b);
+  });
+}
+
+function renderOrder(q) {
+  const row = $('answerRow'), bank = $('bank');
+  const target = q.words.join(' ');
+  let order = shuffle(q.words);
+  while (order.join(' ') === target) order = shuffle(q.words);
+  const chosen = [];
+  const punct = document.createElement('span'); punct.className = 'punct'; punct.textContent = q.punct;
+
+  function redraw() {
+    row.innerHTML = '';
+    row.classList.toggle('empty', chosen.length === 0);
+    row.classList.remove('wrong');
+    chosen.forEach((src, i) => {
+      const t = document.createElement('button');
+      t.className = 'tile'; t.textContent = src.textContent;
+      t.addEventListener('click', () => { chosen.splice(i, 1); src.classList.remove('used'); redraw(); });
+      row.appendChild(t);
+    });
+    if (chosen.length) row.appendChild(punct);
+  }
+  order.forEach(w => {
+    const t = document.createElement('button');
+    t.className = 'tile'; t.textContent = w;
+    t.addEventListener('click', () => { if (t.classList.contains('used')) return; t.classList.add('used'); chosen.push(t); redraw(); });
+    bank.appendChild(t);
+  });
+  $('resetBtn').addEventListener('click', () => { chosen.length = 0; bank.querySelectorAll('.tile').forEach(t => t.classList.remove('used')); redraw(); hideFeedback(); });
+  $('checkBtn').addEventListener('click', () => {
+    if (chosen.length < q.words.length) { showFeedback('bad', 'Use all the words first! 🧩', ''); return; }
+    if (chosen.map(t => t.textContent).join(' ') === target) {
+      row.classList.add('right');
+      row.querySelectorAll('.tile').forEach(t => t.disabled = true);
+      bank.querySelectorAll('.tile').forEach(t => t.disabled = true);
+      $('checkBtn').disabled = true; $('resetBtn').disabled = true;
+      $('checkBtn').parentElement.style.display = 'none';
+      onCorrect(q);
+    } else {
+      row.classList.remove('wrong'); void row.offsetWidth; row.classList.add('wrong');
+      onWrong();
+    }
+  });
+}
+
+function hideFeedback() { $('feedback').className = 'feedback'; }
+function showFeedback(kind, title, body, withNext) {
+  const fb = $('feedback');
+  fb.className = 'feedback show ' + kind;
+  fb.innerHTML = `<div class="msg"><b>${title}</b>${body}</div>`;
+  if (withNext) {
+    const last = state.q === 2;
+    const n = document.createElement('button');
+    n.className = 'btn' + (last ? ' teal' : ''); n.textContent = last ? 'Finish station 🏁' : 'Next ➜';
+    n.addEventListener('click', nextQuestion);
+    fb.appendChild(n);
+    setTimeout(() => n.focus({ preventScroll: true }), 50);
+    fb.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  }
+}
+
+function onCorrect(q) {
+  sfx.good();
+  if (state.firstTry) { state.score++; state.stationScores[state.station]++; }
+  state.answered++;
+  updateHUD();
+  const note = state.firstTry ? ' <span style="opacity:.8">+1 ⭐</span>' : ' <span style="opacity:.8">(no star this time – but you got it!)</span>';
+  showFeedback('good', pick(PRAISE) + note, q.tip, true);
+}
+function onWrong() {
+  sfx.bad();
+  state.firstTry = false;
+  showFeedback('bad', pick(RETRY), 'Read the sentence again and look for clues.', false);
+}
+
+function nextQuestion() {
+  state.q++;
+  if (state.q < 3) { renderQuestion(); return; }
+  updateRoute();
+  const s = STATIONS[state.station], sc = state.stationScores[state.station];
+  $('doneNum').textContent = `${state.station + 1} / 4`;
+  $('doneTitle').textContent = `${s.name} cleared! ${s.emoji}`;
+  $('doneText').innerHTML = `You earned <b>${sc} / 3</b> stars at this station. ${sc === 3 ? 'Flawless flying! 🌟' : 'Nice work – keep going!'}`;
+  $('doneStamp').innerHTML = `<span class="em">${s.emoji}</span><span>${s.name}</span><span>Visited</span>`;
+  const isLast = state.station === STATIONS.length - 1;
+  $('nextStationBtn').textContent = isLast ? 'See my results 🏆' : `Fly to ${STATIONS[state.station + 1].name} ✈️`;
+  $('doneOverlay').classList.add('active');
+  sfx.stamp();
+  setTimeout(() => $('nextStationBtn').focus(), 350);
+}
+
+function afterStation() {
+  $('doneOverlay').classList.remove('active');
+  if (state.station < STATIONS.length - 1) { state.station++; openIntro(); }
+  else finish();
+}
+
+function finish() {
+  const sc = state.score;
+  let msg, sub, stars;
+  if (sc === 12) { msg = 'Perfect mission, Captain! 🏆'; sub = 'You answered every question correctly on the first try. Your English is ready for any journey!'; stars = 3; }
+  else if (sc >= 10) { msg = 'Excellent work, Traveler! 🌟'; sub = 'You really know how to talk about the future. Just a tiny bit more practice for a perfect score!'; stars = 3; }
+  else if (sc >= 7) { msg = 'Great journey! 💖'; sub = 'You have a strong understanding of future forms. Review the tricky ones and fly again!'; stars = 2; }
+  else { msg = 'Good effort – keep flying! ✈️'; sub = 'Every trip makes you better. Review <b>be going to</b>, <b>will</b> and time expressions, then play again!'; stars = 1; }
+  $('endMsg').textContent = msg;
+  $('endSub').innerHTML = sub;
+  $('finalScore').textContent = sc;
+  $('finalRing').style.setProperty('--p', 0);
+  $('stars').innerHTML = [0, 1, 2].map(i => `<span class="${i < stars ? '' : 'off'}">⭐</span>`).join('');
+  $('stampsRow').innerHTML = STATIONS.map((s, i) => `<span class="mini-stamp" style="--r:${[-4, 3, -2, 4][i]}deg">${s.emoji} ${s.name} ${state.stationScores[i]}/3</span>`).join('');
+  show('end');
+  let p = 0; const target = sc / 12 * 100;
+  const tick = () => { p = Math.min(target, p + 2.5); $('finalRing').style.setProperty('--p', p); if (p < target) requestAnimationFrame(tick); };
+  requestAnimationFrame(tick);
+  if (sc >= 7) confetti();
+  sfx.stamp();
+}
+
+/* ---------- confetti ---------- */
+function confetti() {
+  const cv = $('confetti'), ctx = cv.getContext('2d');
+  const r = $('stage').getBoundingClientRect();
+  cv.width = r.width; cv.height = r.height;
+  const colors = ['#F28DB2', '#2BB3B1', '#E8CFA8', '#D9577F', '#F9C784'];
+  const parts = Array.from({ length: 140 }, () => ({
+    x: Math.random() * cv.width, y: -20 - Math.random() * cv.height * .5,
+    w: 6 + Math.random() * 6, h: 8 + Math.random() * 8, vy: 2 + Math.random() * 3, vx: -1 + Math.random() * 2,
+    a: Math.random() * Math.PI, va: -.1 + Math.random() * .2, c: colors[Math.floor(Math.random() * colors.length)]
+  }));
+  let frames = 0;
+  (function loop() {
+    ctx.clearRect(0, 0, cv.width, cv.height);
+    parts.forEach(p => { p.x += p.vx; p.y += p.vy; p.a += p.va; ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.a); ctx.fillStyle = p.c; ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h); ctx.restore(); });
+    if (++frames < 260) requestAnimationFrame(loop); else ctx.clearRect(0, 0, cv.width, cv.height);
+  })();
+}
+
+/* ---------- wire up ---------- */
+$('startBtn').addEventListener('click', () => { tone([523, 784], .1); startMission(); });
+$('beginBtn').addEventListener('click', () => { $('introOverlay').classList.remove('active'); renderQuestion(); });
+$('nextStationBtn').addEventListener('click', afterStation);
+$('againBtn').addEventListener('click', startMission);
+$('soundBtn').addEventListener('click', () => { state.sound = !state.sound; $('soundBtn').textContent = state.sound ? '🔊' : '🔇'; });
+</script>
+</body>
+</html>
